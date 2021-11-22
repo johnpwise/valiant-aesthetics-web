@@ -103,6 +103,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "valiant-aesthetics-web:build:production",
+            "firebaseProject": "valiant-aesthetics-dcf67",
+            "firebaseHostingSite": "valiant-aesthetics-dcf67"
+          }
         }
       }
     }

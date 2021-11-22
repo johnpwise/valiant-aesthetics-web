@@ -44,3 +44,26 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
+
+*.log
+log.txt
+npm-debug.log*
+package-lock.json
+
+/.git
+/.idea
+/.ionic
+/.sass-cache
+/.sourcemaps
+/.versions
+/.vscode
+/coverage
+/platforms
+/plugins
+/android
+/www
