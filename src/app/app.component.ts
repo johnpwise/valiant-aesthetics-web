@@ -1,14 +1,15 @@
-import {Component, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, OnInit, AfterViewInit} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
+import {AuthService} from "./services/auth.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
-
+export class AppComponent implements OnInit, AfterViewInit {
+  public isLoggedIn: boolean = false;
   public publicAppPages = [
     {title: 'Home', url: '/home', icon: 'home'},
     {title: 'Login', url: '/login', icon: 'login'}
@@ -16,7 +17,21 @@ export class AppComponent implements AfterViewInit {
 
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
-  constructor(private observer: BreakpointObserver) {
+  constructor(private observer: BreakpointObserver,
+              private authService: AuthService) {
+  }
+
+  public ngOnInit(): void {
+    // this.authService.getLoggedInStatus().subscribe((res) => {
+    //   if (res) {
+    //     this.isLoggedIn = res;
+    //   }
+    // });
+    // this.isLoggedIn = this.authService.isLoggedIn();
+
+    this.authService.isLoggedIn$.subscribe((res) => {
+      this.isLoggedIn = res;
+    });
   }
 
   public ngAfterViewInit(): void {
