@@ -1,12 +1,28 @@
 import { Injectable } from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   constructor(private afAuth: AngularFireAuth) { }
+
+  public setLoggedInStatus(isLoggedIn: boolean): void {
+    this.isLoggedIn$.next(isLoggedIn);
+  }
+
+  // public getLoggedInStatus(): Observable<boolean> {
+  //   return this.isLoggedIn$.asObservable();
+  // }
+  //
+  // public isLoggedIn(): boolean {
+  //   return this.isLoggedIn$.value;
+  // }
+
 
   public login(email: string, password: string): void {
     this.afAuth.signInWithEmailAndPassword(email, password)
@@ -21,6 +37,8 @@ export class AuthService {
         //
         // this.router.navigateByUrl('/account');
         console.log('SUCCESS ' + value.user?.email);
+
+        this.setLoggedInStatus(true);
       })
       .catch(err => {
         console.log('Something went wrong: ', err.message);
