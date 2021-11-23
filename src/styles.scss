@@ -2,3 +2,17 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.app-page {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+mat-form-field {
+  padding: 6px;
+
+  mat-label {
+    font-size: 14pt;
+  }
+}

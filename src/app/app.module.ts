@@ -15,6 +15,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDividerModule} from "@angular/material/divider";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 import {AppComponent} from './app.component';
 import {LoginComponent} from './public/login/login.component';
@@ -39,7 +41,9 @@ import {HomeComponent} from './public/home/home.component';
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

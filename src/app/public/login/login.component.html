@@ -1,1 +1,15 @@
-<button (click)="login()">LOGIN</button>
+<div class="app-page">
+  <h2>Login to the Client Area</h2>
+    <mat-form-field appearance="standard">
+      <mat-label>Username / Email</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Password</mat-label>
+      <input matInput type="password">
+    </mat-form-field>
+  <div>
+    <button (click)="login()" mat-button color="accent">LOGIN</button>
+  </div>
+</div>
