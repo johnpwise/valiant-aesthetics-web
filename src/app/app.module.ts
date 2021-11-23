@@ -10,23 +10,20 @@ import {getFirestore, provideFirestore} from '@angular/fire/firestore';
 import {getMessaging, provideMessaging} from '@angular/fire/messaging';
 import {AngularFireModule} from "@angular/fire/compat";
 
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatIconModule} from "@angular/material/icon";
-import {MatButtonModule} from "@angular/material/button";
-import {MatDividerModule} from "@angular/material/divider";
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import {MaterialComponentsModule} from "./material-components/material-components.module";
+import {AccountModule} from "./client/account/account.module";
 
 import {AppComponent} from './app.component';
 import {LoginComponent} from './public/login/login.component';
 import {HomeComponent} from './public/home/home.component';
+import {SideNavMyAccountComponent} from './client/side-nav-my-account/side-nav-my-account.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    SideNavMyAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -37,13 +34,9 @@ import {HomeComponent} from './public/home/home.component';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideMessaging(() => getMessaging()),
-    MatToolbarModule,
-    MatSidenavModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatFormFieldModule,
-    MatInputModule
+    MaterialComponentsModule,
+    AccountModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

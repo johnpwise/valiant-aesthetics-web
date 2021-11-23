@@ -15,6 +15,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     {title: 'Login', url: '/login', icon: 'login'}
   ];
 
+  public clientAppPages = [
+    {title: 'Account', url: '/account', icon: 'settings'}
+  ];
+
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
   constructor(private observer: BreakpointObserver,
@@ -22,15 +26,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   public ngOnInit(): void {
-    // this.authService.getLoggedInStatus().subscribe((res) => {
-    //   if (res) {
-    //     this.isLoggedIn = res;
-    //   }
-    // });
-    // this.isLoggedIn = this.authService.isLoggedIn();
-
     this.authService.isLoggedIn$.subscribe((res) => {
       this.isLoggedIn = res;
+
+      if (!res) {
+        // check localStorage once implented
+      }
     });
   }
 

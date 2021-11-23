@@ -15,13 +15,13 @@ export class AuthService {
     this.isLoggedIn$.next(isLoggedIn);
   }
 
-  public getLoggedInStatus(): Observable<boolean> {
-    return this.isLoggedIn$.asObservable();
-  }
-
-  public isLoggedIn(): boolean {
-    return this.isLoggedIn$.value;
-  }
+  // public getLoggedInStatus(): Observable<boolean> {
+  //   return this.isLoggedIn$.asObservable();
+  // }
+  //
+  // public isLoggedIn(): boolean {
+  //   return this.isLoggedIn$.value;
+  // }
 
 
   public login(email: string, password: string): void {

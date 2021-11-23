@@ -18,8 +18,12 @@
 <!--    <h4 class="name">John Smith</h4>-->
 <!--    <p class="designation">Software Engineer</p>-->
 
-    <div *ngIf="isLoggedIn">LOGGED IN</div>
-    <img src="../assets/VA_LOGO_WHITE.png" alt="logo" width="70" height="50" />
+    <div *ngIf="isLoggedIn">
+      <app-side-nav-my-account></app-side-nav-my-account>
+    </div>
+    <div *ngIf="!isLoggedIn">
+      <img src="../assets/VA_LOGO_WHITE.png" alt="logo" width="70" height="50" />
+    </div>
 
     <mat-divider></mat-divider>
 
@@ -30,6 +34,16 @@
       <mat-icon>{{publicAppPage.icon}}</mat-icon>
       <span>{{publicAppPage.title}}</span>
     </button>
+
+    <div *ngIf="isLoggedIn">
+      <button *ngFor="let clientAppPage of clientAppPages; let i = index;"
+              class="menu-button"
+              mat-button
+              [routerLink]="[clientAppPage.url]">
+        <mat-icon>{{clientAppPage.icon}}</mat-icon>
+        <span>{{clientAppPage.title}}</span>
+      </button>
+    </div>
 
     <mat-divider></mat-divider>
 
