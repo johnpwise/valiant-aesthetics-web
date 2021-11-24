@@ -9,8 +9,6 @@ import {User} from "../../models/user.model";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  // private _user: User = new User();
-
   public email: string = '';
   public password: string = '';
 
@@ -21,18 +19,6 @@ export class LoginComponent implements OnInit {
   }
 
   public login(): void {
-    // this.dataService.getUserProfileById(this.email).subscribe((res) => {
-    //   this.authService.setDisplayedUsername(res.username);
-    //
-    //   let authObj = this.authService.fetchLocalStorage('auth');
-    //   if (authObj !== null) {
-    //     authObj.username = res.username;
-    //
-    //     // save back
-    //     localStorage.setItem('auth', JSON.stringify(authObj));
-    //   }
-    // });
-
     this.authService.login(
       this.email,
       this.password

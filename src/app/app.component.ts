@@ -31,6 +31,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.authService.isLoggedIn$.subscribe((res) => {
       if (res) {
         this.setClientLoggedInStatus();
+      } else {
+        this.setPublicStatus();
       }
 
       if (!this.isLoggedIn) {
@@ -39,6 +41,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         // if it exists
         if (authObjStr !== null) {
           this.setClientLoggedInStatus();
+        } else {
+          this.setPublicStatus();
         }
       }
     }, error => {
@@ -61,5 +65,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   private setClientLoggedInStatus(): void {
     this.isLoggedIn = true;
     this.menuService.updateMenuItemsForClient();
+  }
+
+  private setPublicStatus(): void {
+    this.isLoggedIn = false;
+    this.menuService.updateMenuItemsForPublic();
   }
 }
