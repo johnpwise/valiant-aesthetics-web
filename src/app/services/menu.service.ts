@@ -16,6 +16,11 @@ export class MenuService {
   private static setMenuItemsForPublic(): MenuItem[] {
     return [
       {title: 'Home', url: '/home', icon: 'home'},
+      {title: 'Personal Training', url: '/personal-training', icon: 'people'},
+      {title: 'Online Coaching', url: '/online-coaching', icon: 'people'},
+      {title: 'About', url: '/about', icon: 'info'},
+      {title: 'Nutrition', url: '/nutrition', icon: 'restaurant'},
+      {title: 'Contact', url: '/contact', icon: 'email'},
       {title: 'Login', url: '/login', icon: 'login'}
     ];
   }
