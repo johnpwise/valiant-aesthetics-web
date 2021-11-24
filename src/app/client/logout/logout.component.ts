@@ -7,18 +7,18 @@ import {MenuService} from "../../services/menu.service";
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.scss']
 })
-export class LogoutComponent implements OnInit, OnDestroy {
+export class LogoutComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private menuService: MenuService) { }
 
   public ngOnInit(): void {
-    this.authService.logout();
     this.menuService.updateMenuItemsForPublic();
+    this.authService.logout();
   }
 
-  public ngOnDestroy() {
-    this.authService.logout();
-    this.menuService.updateMenuItemsForPublic();
-  }
+  // public ngOnDestroy() {
+  //   this.authService.logout();
+  //   this.menuService.updateMenuItemsForPublic();
+  // }
 }
