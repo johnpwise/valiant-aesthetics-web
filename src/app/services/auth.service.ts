@@ -8,9 +8,9 @@ import {Auth} from "../models/auth.model";
   providedIn: 'root'
 })
 export class AuthService {
-  private _auth: Auth = new Auth();
-
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loggedInUsername$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private _auth: Auth = new Auth();
 
   constructor(private afAuth: AngularFireAuth,
               private router: Router) {
@@ -18,6 +18,40 @@ export class AuthService {
 
   public setLoggedInStatus(isLoggedIn: boolean): void {
     this.isLoggedIn$.next(isLoggedIn);
+  }
+
+  public setDisplayedUsername(username: string): void {
+    this.loggedInUsername$.next(username);
+  }
+
+  public fetchLocalStorage(key: string): any {
+    let authObjStr = JSON.parse(<string>localStorage.getItem(key));
+    if (authObjStr !== null) {
+      return authObjStr;
+    }
+
+    return '';
+  }
+
+  public login(email: string, password: string): void {
+    this.afAuth.signInWithEmailAndPassword(email, password)
+      .then(value => {
+        this._auth = new Auth();
+        this._auth.loggedIn = new Date();
+        this._auth.username = value.user?.email;
+
+        localStorage.setItem('auth', JSON.stringify(this._auth));
+
+        this.setDisplayedUsername(this._auth.username || '');
+        this.setLoggedInStatus(true);
+
+        this.router.navigateByUrl('/account');
+      })
+      .catch(err => {
+        console.log('Something went wrong: ', err.message);
+        // this.toastService.showToastMessage('Login failed', 'danger').then(() => {
+        // });
+      });
   }
 
   // public getLoggedInStatus(): Observable<boolean> {
@@ -28,36 +62,26 @@ export class AuthService {
   //   return this.isLoggedIn$.value;
   // }
 
-
-  public login(email: string, password: string): void {
-    this.afAuth.signInWithEmailAndPassword(email, password)
-      .then(value => {
-        this._auth = new Auth();
-        this._auth.loggedIn = new Date();
-        this._auth.username = value.user?.email;
-        //
-        localStorage.setItem('auth', JSON.stringify(this._auth));
-        //
-        // this.updateOnScreenUserName(value.user.email);
-        //
-        this.router.navigateByUrl('/account');
-
-        this.setLoggedInStatus(true);
-      })
-      .catch(err => {
-        console.log('Something went wrong: ', err.message);
-        // this.toastService.showToastMessage('Login failed', 'danger').then(() => {
-        // });
-      });
+  public logout(): void {
+    // localStorage.removeItem('auth');
+    // this.setLoggedInStatus(false);
+    //
+    this.afAuth.signOut().then(() => {
+      localStorage.removeItem('auth');
+      this.setLoggedInStatus(false);
+    });
   }
 
-  public logout(): void {
-    localStorage.removeItem('auth');
+  public fetchUsernameToDisplay(): string {
+    return this.getUsernameFromUserProfile();
+  }
 
-    this.setLoggedInStatus(false);
-    // this.afAuth.signOut().then(() => {
-    //   this.setLoggedInStatus(false);
-    //   this.router.navigate(['']);
-    // });
+  private getUsernameFromUserProfile(): string {
+    let authObj = this.fetchLocalStorage('auth');
+    if (authObj !== null) {
+      return authObj.username;
+    } else {
+      return '';
+    }
   }
 }
