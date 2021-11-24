@@ -1,13 +1,13 @@
 <div class="app-page">
   <h2>Login to the Client Area</h2>
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="standard" class="input-element">
       <mat-label>Username / Email</mat-label>
-      <input matInput>
+      <input [(ngModel)]="email" name="email" matInput>
     </mat-form-field>
 
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="standard" class="input-element">
       <mat-label>Password</mat-label>
-      <input matInput type="password">
+      <input [(ngModel)]="password" name="password" matInput type="password">
     </mat-form-field>
   <div>
     <button (click)="login()" mat-button color="accent">LOGIN</button>

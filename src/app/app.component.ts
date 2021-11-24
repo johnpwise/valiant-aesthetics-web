@@ -1,17 +1,16 @@
-import {AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {AuthService} from "./services/auth.service";
 import {MenuService} from "./services/menu.service";
 import {MenuItem} from "./models/menu-item.model";
-import {Auth} from "./models/auth.model";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit, OnChanges {
+export class AppComponent implements OnInit, AfterViewInit {
   public isLoggedIn: boolean = false;
   public menuItems: MenuItem[] = [];
 
@@ -30,35 +29,25 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
     });
 
     this.authService.isLoggedIn$.subscribe((res) => {
-      this.isLoggedIn = res;
-
-      if (this.isLoggedIn) {
-        // update the menu items accordingly
-        this.menuService.updateMenuItemsForClient();
+      if (res) {
+        this.setClientLoggedInStatus();
+      } else {
+        this.setPublicStatus();
       }
 
-      if (!res) {
+      if (!this.isLoggedIn) {
         let authObjStr = JSON.parse(<string>localStorage.getItem('auth'));
-        let authObj: Auth = new Auth();
 
+        // if it exists
         if (authObjStr !== null) {
-          this.isLoggedIn = true;
-          this.menuService.updateMenuItemsForClient();
-
-          // if (authObj.username !== null || authObj.username !== '') {
-          //   this.authService.userNameEventStream.next(authObj.username);
-          // }
+          this.setClientLoggedInStatus();
+        } else {
+          this.setPublicStatus();
         }
       }
     }, error => {
     }, () => {
     });
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (this.sidenav.opened) {
-      this.sidenav.close();
-    }
   }
 
   public ngAfterViewInit(): void {
@@ -71,5 +60,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
         this.sidenav.open();
       }
     });
+  }
+
+  private setClientLoggedInStatus(): void {
+    this.isLoggedIn = true;
+    this.menuService.updateMenuItemsForClient();
+  }
+
+  private setPublicStatus(): void {
+    this.isLoggedIn = false;
+    this.menuService.updateMenuItemsForPublic();
   }
 }
