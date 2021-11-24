@@ -27,24 +27,11 @@
 
     <mat-divider></mat-divider>
 
-    <button *ngFor="let publicAppPage of publicAppPages; let i = index;"
-            class="menu-button"
-            mat-button
-            [routerLink]="[publicAppPage.url]">
-      <mat-icon>{{publicAppPage.icon}}</mat-icon>
-      <span>{{publicAppPage.title}}</span>
-    </button>
-
-    <div *ngIf="isLoggedIn">
-      <button *ngFor="let clientAppPage of clientAppPages; let i = index;"
-              class="menu-button"
-              mat-button
-              [routerLink]="[clientAppPage.url]">
-        <mat-icon>{{clientAppPage.icon}}</mat-icon>
-        <span>{{clientAppPage.title}}</span>
-      </button>
-    </div>
-
+    <app-side-nav-item *ngFor="let p of menuItems; let i = index;"
+      [title]="p.title"
+      [url]="p.url"
+      [icon]="p.icon"></app-side-nav-item>
+    
     <mat-divider></mat-divider>
 
     <button class="menu-button" mat-button>

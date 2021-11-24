@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Router} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject} from "rxjs";
+import {Auth} from "../models/auth.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private _auth: Auth = new Auth();
 
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private afAuth: AngularFireAuth) { }
+  constructor(private afAuth: AngularFireAuth,
+              private router: Router) {
+  }
 
   public setLoggedInStatus(isLoggedIn: boolean): void {
     this.isLoggedIn$.next(isLoggedIn);
@@ -27,16 +32,15 @@ export class AuthService {
   public login(email: string, password: string): void {
     this.afAuth.signInWithEmailAndPassword(email, password)
       .then(value => {
-        // this._auth = new Auth();
-        // this._auth.loggedIn = new Date();
-        // this._auth.username = value.user.email;
+        this._auth = new Auth();
+        this._auth.loggedIn = new Date();
+        this._auth.username = value.user?.email;
         //
-        // localStorage.setItem('auth', JSON.stringify(this._auth));
+        localStorage.setItem('auth', JSON.stringify(this._auth));
         //
         // this.updateOnScreenUserName(value.user.email);
         //
-        // this.router.navigateByUrl('/account');
-        console.log('SUCCESS ' + value.user?.email);
+        this.router.navigateByUrl('/account');
 
         this.setLoggedInStatus(true);
       })
@@ -45,5 +49,15 @@ export class AuthService {
         // this.toastService.showToastMessage('Login failed', 'danger').then(() => {
         // });
       });
+  }
+
+  public logout(): void {
+    localStorage.removeItem('auth');
+
+    this.setLoggedInStatus(false);
+    // this.afAuth.signOut().then(() => {
+    //   this.setLoggedInStatus(false);
+    //   this.router.navigate(['']);
+    // });
   }
 }
