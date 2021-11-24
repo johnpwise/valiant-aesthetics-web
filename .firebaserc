@@ -1,13 +1,4 @@
 {
-  "targets": {
-    "valiant-aesthetics-dcf67": {
-      "hosting": {
-        "valiant-aesthetics-web": [
-          "valiant-aesthetics-dcf67"
-        ]
-      }
-    }
-  },
   "projects": {
     "default": "valiant-aesthetics-dcf67"
   }
