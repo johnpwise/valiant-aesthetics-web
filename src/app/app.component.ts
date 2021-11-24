@@ -1,7 +1,9 @@
-import {Component, ViewChild, OnInit, AfterViewInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {AuthService} from "./services/auth.service";
+import {MenuService} from "./services/menu.service";
+import {MenuItem} from "./models/menu-item.model";
 
 @Component({
   selector: 'app-root',
@@ -10,34 +12,41 @@ import {AuthService} from "./services/auth.service";
 })
 export class AppComponent implements OnInit, AfterViewInit {
   public isLoggedIn: boolean = false;
-  public publicAppPages = [
-    {title: 'Home', url: '/home', icon: 'home'},
-    {title: 'Login', url: '/login', icon: 'login'}
-  ];
-
-  public clientAppPages = [
-    {title: 'Account', url: '/account', icon: 'settings'}
-  ];
+  public menuItems: MenuItem[] = [];
 
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
   constructor(private observer: BreakpointObserver,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private menuService: MenuService) {
   }
 
   public ngOnInit(): void {
+    this.menuService.menuItems$.subscribe((menuItems) => {
+      this.menuItems = menuItems;
+    }, error => {
+    }, () => {
+    });
+
     this.authService.isLoggedIn$.subscribe((res) => {
       this.isLoggedIn = res;
+
+      if (this.isLoggedIn) {
+        // update the menu items accordingly
+        this.menuService.updateMenuItemsForClient();
+      }
 
       if (!res) {
         // check localStorage once implented
       }
+    }, error => {
+    }, () => {
     });
   }
 
   public ngAfterViewInit(): void {
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
-      if (res.matches){
+      if (res.matches) {
         this.sidenav.mode = 'over';
         this.sidenav.close();
       } else {

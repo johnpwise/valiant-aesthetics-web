@@ -17,13 +17,15 @@ import {AppComponent} from './app.component';
 import {LoginComponent} from './public/login/login.component';
 import {HomeComponent} from './public/home/home.component';
 import {SideNavMyAccountComponent} from './client/side-nav-my-account/side-nav-my-account.component';
+import { SideNavItemComponent } from './common/side-nav-item/side-nav-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    SideNavMyAccountComponent
+    SideNavMyAccountComponent,
+    SideNavItemComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,6 @@ import {SideNavMyAccountComponent} from './client/side-nav-my-account/side-nav-m
     provideMessaging(() => getMessaging()),
     MaterialComponentsModule,
     AccountModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]
