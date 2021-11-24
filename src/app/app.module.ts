@@ -11,7 +11,6 @@ import {getFirestore, provideFirestore} from '@angular/fire/firestore';
 import {getMessaging, provideMessaging} from '@angular/fire/messaging';
 import {AngularFireModule} from "@angular/fire/compat";
 // import {AngularFireDatabaseModule} from '@angular/fire/compat/database';
-
 import {MaterialComponentsModule} from "./material-components/material-components.module";
 import {AccountModule} from "./client/account/account.module";
 import {PublicModule} from "./public/public.module";
@@ -23,6 +22,7 @@ import {SideNavMyAccountComponent} from './client/side-nav-my-account/side-nav-m
 import {SideNavItemComponent} from './common/side-nav-item/side-nav-item.component';
 import {LogoutComponent} from './client/logout/logout.component';
 import {PersonalTrainingComponent} from './public/personal-training/personal-training.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import {PersonalTrainingComponent} from './public/personal-training/personal-tra
     provideMessaging(() => getMessaging()),
     MaterialComponentsModule,
     PublicModule,
-    AccountModule
+    AccountModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
