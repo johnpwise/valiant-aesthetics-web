@@ -1,0 +1,40 @@
+//.container {
+//  display: grid;
+//  grid-template-columns: repeat(auto-fill, minmax(305px, 1fr));
+//  grid-gap: 15px;
+//}
+
+.container {
+  font-size: 0.75em;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.main-image {
+  margin-top: -200px;
+  margin-bottom: -200px;
+  width: calc(50vh);
+}
+
+.mi-blurb {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.blurb2 {
+  font-weight: bold;
+  font-size: 36pt;
+}
+
+.large-text {
+  font-size: 36pt;
+}
+
+.red-text {
+  color: red;
+}
+
+.left-align {
+  text-align: left;
+}
