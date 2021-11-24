@@ -14,15 +14,9 @@ export class SideNavMyAccountComponent implements OnInit {
 
   public ngOnInit(): void {
     this.authService.loggedInUsername$.subscribe((res) => {
-      this.username = res;
+      this.username = this.authService.fetchUsernameToDisplay();
     }, error => {
     }, () => {
-      // let authObj = this.authService.fetchLocalStorage('auth');
-      // if (authObj !== '') {
-      //   if (authObj.username !== null || authObj.username !== '') {
-      //     this.authService.loggedInUsername$.next(authObj.username);
-      //   }
-      // }
     });
   }
 }

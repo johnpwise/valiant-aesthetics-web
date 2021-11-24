@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {AuthService} from "./services/auth.service";
@@ -10,7 +10,7 @@ import {MenuItem} from "./models/menu-item.model";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit, OnChanges {
+export class AppComponent implements OnInit, AfterViewInit {
   public isLoggedIn: boolean = false;
   public menuItems: MenuItem[] = [];
 
@@ -44,12 +44,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
     }, error => {
     }, () => {
     });
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (this.sidenav.opened) {
-      this.sidenav.close();
-    }
   }
 
   public ngAfterViewInit(): void {

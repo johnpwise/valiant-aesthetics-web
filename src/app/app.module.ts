@@ -10,6 +10,7 @@ import {getAuth, provideAuth} from '@angular/fire/auth';
 import {getFirestore, provideFirestore} from '@angular/fire/firestore';
 import {getMessaging, provideMessaging} from '@angular/fire/messaging';
 import {AngularFireModule} from "@angular/fire/compat";
+// import {AngularFireDatabaseModule} from '@angular/fire/compat/database';
 
 import {MaterialComponentsModule} from "./material-components/material-components.module";
 import {AccountModule} from "./client/account/account.module";

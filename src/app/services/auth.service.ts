@@ -8,10 +8,9 @@ import {Auth} from "../models/auth.model";
   providedIn: 'root'
 })
 export class AuthService {
-  private _auth: Auth = new Auth();
-
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public loggedInUsername$: BehaviorSubject<string> = new BehaviorSubject<string>('Valiant Aesthetics');
+  public loggedInUsername$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private _auth: Auth = new Auth();
 
   constructor(private afAuth: AngularFireAuth,
               private router: Router) {
@@ -33,14 +32,6 @@ export class AuthService {
 
     return '';
   }
-  // public getLoggedInStatus(): Observable<boolean> {
-  //   return this.isLoggedIn$.asObservable();
-  // }
-  //
-  // public isLoggedIn(): boolean {
-  //   return this.isLoggedIn$.value;
-  // }
-
 
   public login(email: string, password: string): void {
     this.afAuth.signInWithEmailAndPassword(email, password)
@@ -48,11 +39,9 @@ export class AuthService {
         this._auth = new Auth();
         this._auth.loggedIn = new Date();
         this._auth.username = value.user?.email;
-        //
+
         localStorage.setItem('auth', JSON.stringify(this._auth));
-        //
-        // this.updateOnScreenUserName(value.user.email);
-        //
+
         this.setDisplayedUsername(this._auth.username || '');
         this.setLoggedInStatus(true);
 
@@ -65,13 +54,34 @@ export class AuthService {
       });
   }
 
-  public logout(): void {
-    localStorage.removeItem('auth');
+  // public getLoggedInStatus(): Observable<boolean> {
+  //   return this.isLoggedIn$.asObservable();
+  // }
+  //
+  // public isLoggedIn(): boolean {
+  //   return this.isLoggedIn$.value;
+  // }
 
-    this.setLoggedInStatus(false);
-    // this.afAuth.signOut().then(() => {
-    //   this.setLoggedInStatus(false);
-    //   this.router.navigate(['']);
-    // });
+  public logout(): void {
+    // localStorage.removeItem('auth');
+    // this.setLoggedInStatus(false);
+    //
+    this.afAuth.signOut().then(() => {
+      localStorage.removeItem('auth');
+      this.setLoggedInStatus(false);
+    });
+  }
+
+  public fetchUsernameToDisplay(): string {
+    return this.getUsernameFromUserProfile();
+  }
+
+  private getUsernameFromUserProfile(): string {
+    let authObj = this.fetchLocalStorage('auth');
+    if (authObj !== null) {
+      return authObj.username;
+    } else {
+      return '';
+    }
   }
 }
