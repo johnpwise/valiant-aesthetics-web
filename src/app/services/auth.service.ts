@@ -50,4 +50,14 @@ export class AuthService {
         // });
       });
   }
+
+  public logout(): void {
+    localStorage.removeItem('auth');
+
+    this.setLoggedInStatus(false);
+    // this.afAuth.signOut().then(() => {
+    //   this.setLoggedInStatus(false);
+    //   this.router.navigate(['']);
+    // });
+  }
 }

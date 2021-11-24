@@ -38,12 +38,12 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
 
       if (!res) {
-        // check localStorage once implented
         let authObjStr = JSON.parse(<string>localStorage.getItem('auth'));
         let authObj: Auth = new Auth();
 
         if (authObjStr !== null) {
           this.isLoggedIn = true;
+          this.menuService.updateMenuItemsForClient();
 
           // if (authObj.username !== null || authObj.username !== '') {
           //   this.authService.userNameEventStream.next(authObj.username);

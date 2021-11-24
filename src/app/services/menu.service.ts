@@ -6,16 +6,26 @@ import {MenuItem} from "../models/menu-item.model";
   providedIn: 'root'
 })
 export class MenuService {
-  private menuItems = [
-    {title: 'Home', url: '/home', icon: 'home', access: 'public', display: true},
-    {title: 'Login', url: '/login', icon: 'login', access: 'public', display: true},
-    {title: 'Logout', url: '/home', icon: 'logout', access: 'client', display: false},
-    {title: 'Account', url: '/account', icon: 'settings', access: 'client', display: false}
-  ];
+  private menuItems = MenuService.setMenuItemsForPublic();
 
   public menuItems$: BehaviorSubject<MenuItem[]> = new BehaviorSubject<MenuItem[]>(this.menuItems);
 
   constructor() {
+  }
+
+  private static setMenuItemsForPublic(): MenuItem[] {
+    return [
+      {title: 'Home', url: '/home', icon: 'home'},
+      {title: 'Login', url: '/login', icon: 'login'}
+    ];
+  }
+
+  private static setMenuItemsForClient(): MenuItem[] {
+    return [
+      {title: 'Home', url: '/home', icon: 'home'},
+      {title: 'Account', url: '/account', icon: 'settings'},
+      {title: 'Logout', url: '/logout', icon: 'logout'}
+    ];
   }
 
   public setMenuItemsStatus(menuItems: MenuItem[]) {
@@ -23,15 +33,10 @@ export class MenuService {
   }
 
   public updateMenuItemsForClient(): void {
-    this.menuItems$.next(this.setMenuItemsForClient());
+    this.setMenuItemsStatus(MenuService.setMenuItemsForClient());
   }
 
-  private setMenuItemsForClient(): MenuItem[] {
-    return [
-      {title: 'Home', url: '/home', icon: 'home', access: 'public', display: true},
-      {title: 'Login', url: '/login', icon: 'login', access: 'public', display: false},
-      {title: 'Account', url: '/account', icon: 'settings', access: 'client', display: true},
-      {title: 'Logout', url: '/home', icon: 'logout', access: 'client', display: true}
-    ];
+  public updateMenuItemsForPublic(): void {
+    this.setMenuItemsStatus(MenuService.setMenuItemsForPublic());
   }
 }

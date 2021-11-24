@@ -5,9 +5,15 @@ import {canActivate, redirectUnauthorizedTo} from '@angular/fire/compat/auth-gua
 import {LoginComponent} from "./public/login/login.component";
 import {HomeComponent} from "./public/home/home.component";
 
+import {LogoutComponent} from "./client/logout/logout.component";
+
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
+  {
+    path: 'logout',
+    component: LogoutComponent
+  },
   {
     path: '',
     redirectTo: 'home',

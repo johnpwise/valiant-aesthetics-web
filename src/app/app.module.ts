@@ -18,6 +18,7 @@ import {LoginComponent} from './public/login/login.component';
 import {HomeComponent} from './public/home/home.component';
 import {SideNavMyAccountComponent} from './client/side-nav-my-account/side-nav-my-account.component';
 import { SideNavItemComponent } from './common/side-nav-item/side-nav-item.component';
+import { LogoutComponent } from './client/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SideNavItemComponent } from './common/side-nav-item/side-nav-item.compo
     LoginComponent,
     HomeComponent,
     SideNavMyAccountComponent,
-    SideNavItemComponent
+    SideNavItemComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
