@@ -4,6 +4,7 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {AuthService} from "./services/auth.service";
 import {MenuService} from "./services/menu.service";
 import {MenuItem} from "./models/menu-item.model";
+import {Auth} from "./models/auth.model";
 
 @Component({
   selector: 'app-root',
@@ -38,6 +39,16 @@ export class AppComponent implements OnInit, AfterViewInit {
 
       if (!res) {
         // check localStorage once implented
+        let authObjStr = JSON.parse(<string>localStorage.getItem('auth'));
+        let authObj: Auth = new Auth();
+
+        if (authObjStr !== null) {
+          this.isLoggedIn = true;
+
+          // if (authObj.username !== null || authObj.username !== '') {
+          //   this.authService.userNameEventStream.next(authObj.username);
+          // }
+        }
       }
     }, error => {
     }, () => {
