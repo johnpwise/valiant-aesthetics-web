@@ -11,6 +11,7 @@ export class AuthService {
   private _auth: Auth = new Auth();
 
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loggedInUsername$: BehaviorSubject<string> = new BehaviorSubject<string>('Valiant Aesthetics');
 
   constructor(private afAuth: AngularFireAuth,
               private router: Router) {
@@ -20,6 +21,18 @@ export class AuthService {
     this.isLoggedIn$.next(isLoggedIn);
   }
 
+  public setDisplayedUsername(username: string): void {
+    this.loggedInUsername$.next(username);
+  }
+
+  public fetchLocalStorage(key: string): any {
+    let authObjStr = JSON.parse(<string>localStorage.getItem(key));
+    if (authObjStr !== null) {
+      return authObjStr;
+    }
+
+    return '';
+  }
   // public getLoggedInStatus(): Observable<boolean> {
   //   return this.isLoggedIn$.asObservable();
   // }
@@ -40,9 +53,10 @@ export class AuthService {
         //
         // this.updateOnScreenUserName(value.user.email);
         //
-        this.router.navigateByUrl('/account');
-
+        this.setDisplayedUsername(this._auth.username || '');
         this.setLoggedInStatus(true);
+
+        this.router.navigateByUrl('/account');
       })
       .catch(err => {
         console.log('Something went wrong: ', err.message);
