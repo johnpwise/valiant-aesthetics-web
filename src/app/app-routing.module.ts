@@ -1,16 +1,29 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from "./public/login/login.component";
+import {canActivate, redirectUnauthorizedTo} from '@angular/fire/compat/auth-guard';
+
+import {LogoutComponent} from "./client/logout/logout.component";
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
   {
+    path: 'logout',
+    component: LogoutComponent
+  },
+  {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'home',
+    loadChildren: () => import('./public/public.module').then(m => m.PublicModule)
+  },
+  {
+    path: 'account',
+    loadChildren: () => import('./client/account/account.module').then(m => m.AccountModule),
+    ...canActivate(redirectUnauthorizedToLogin)
   }
 ];
 
